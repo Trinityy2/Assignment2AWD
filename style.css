@@ -1,0 +1,17 @@
+body {
+    background-image: url(images/background.jpg);
+    background-size:cover;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+#app {
+  width: 1140px;
+  height: 675px;
+  position: relative;
+  top: -33px;
+  left:-45px;
+
+}
