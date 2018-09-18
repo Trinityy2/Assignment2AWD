@@ -1,7 +1,9 @@
 body {
     background-image: url(images/background.jpg);
-    background-size:cover;
-    height: 100vh;
+	background-size: cover;
+	background-repeat: no-repeat;
+    height: 90vh;
+	width: 90vw;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -14,4 +16,9 @@ body {
   top: -33px;
   left:-45px;
 
+}
+
+#notebook {
+	width: 1150px;
+	height: auto;
 }
