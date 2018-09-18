@@ -123,7 +123,7 @@ function draw( e ) {
 * @param type: string either 'horizontal' or 'vertical'
 */
 function renderStraightLine(type, originX, originY, currentX, currentY){
-	context.beginPath
+	context.beginPath()
 	context.lineJoin = "round";
 	context.lineCap = "round";
 	context.strokeStyle = "black";
