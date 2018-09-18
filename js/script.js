@@ -27,7 +27,7 @@ window.addEventListener( 'touchend', stop );
 // document.querySelector( '#colors' ).addEventListener( 'click', selectTool );
 window.addEventListener( 'resize', resizeCanvas );
 
-Functions
+//Functions
 resizeCanvas();
 
 function resizeCanvas() {
@@ -123,7 +123,7 @@ function draw( e ) {
 * @param type: string either 'horizontal' or 'vertical'
 */
 function renderStraightLine(type, originX, originY, currentX, currentY){
-	context.beginPath();
+	context.beginPath
 	context.lineJoin = "round";
 	context.lineCap = "round";
 	context.strokeStyle = "black";
@@ -133,8 +133,8 @@ function renderStraightLine(type, originX, originY, currentX, currentY){
 	} else {
 		context.lineTo(originX, currentY);
 	}
+	context.clearRect( 0, 0, canvas.width, canvas.height );
 	context.stroke();
-	console.log(context);
 }
 
 function highlightButton( button ) {
