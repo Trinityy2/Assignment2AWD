@@ -99,7 +99,7 @@ function draw( e ) {
 	}
   // if ( e.which === 1 || e.type === 'touchstart' || e.type === 'touchmove' ) {
   //   window.addEventListener( 'mousemove', draw );
-	// 	window.addEventListener( 'touchmove', draw );
+	// 	 window.addEventListener( 'touchmove', draw );
   //   var mouseX = e.pageX - canvas.offsetLeft;
   //   var mouseY = e.pageY - canvas.offsetTop;
   //   var mouseDrag = e.type === 'mousemove';
@@ -133,7 +133,9 @@ function renderStraightLine(type, originX, originY, currentX, currentY){
 	} else {
 		context.lineTo(originX, currentY);
 	}
-	context.clearRect( 0, 0, canvas.width, canvas.height );
+	context.clearRect( 0, 0, canvas.width, canvas.height);
+
+	if (canvasState.length > 0) updateCanvas();
 	context.stroke();
 }
 
@@ -149,8 +151,8 @@ function renderLine() {
       //context.stroke();
       context.beginPath();
       context.lineWidth = linePoints[i].width;
-	  context.lineJoin = "round";
-		context.lineCap = "round";
+	  	context.lineJoin = "round";
+			context.lineCap = "round";
       context.strokeStyle = linePoints[i].color;
       context.moveTo( linePoints[i].x, linePoints[i].y );
       context.lineTo( linePoints[i].x + 0.5, linePoints[i].y + 0.5 );
@@ -172,7 +174,7 @@ function saveState() {
   canvasState.unshift( context.getImageData( 0, 0, canvas.width, canvas.height ) );
   linePoints = [];
   if ( canvasState.length > 25 ) canvasState.length = 25;
-  undoButton.classList.remove( 'disabled' );
+  //undoButton.classList.remove( 'disabled' );
 }
 
 function selectTool( e ) {
@@ -189,7 +191,11 @@ function selectTool( e ) {
 function stop( e ) {
   if ( e.which === 1 || e.type === 'touchend' ) {
     window.removeEventListener( 'mousemove', draw );
-	window.removeEventListener( 'touchmove', draw );
+ 		window.removeEventListener( 'touchmove', draw );
+
+		if (currentFunction === 'line'){
+			saveState();
+		}
   }
 }
 
@@ -201,5 +207,5 @@ function undoState() {
 function updateCanvas() {
   context.clearRect( 0, 0, canvas.width, canvas.height );
   context.putImageData( canvasState[ 0 ], 0, 0 );
-  renderLine();
+  //renderLine();
 }
