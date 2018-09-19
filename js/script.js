@@ -9,7 +9,12 @@ var canvasState = [];
 var undoButton = document.querySelector( '[data-action=undo]' );
 
 //Use this to determine what is being done (by default, it is line).
-var currentFunction = 'line';
+var currentFunction = 'quads';
+/**
+* The functions available (as strings):
+* 'line' : To draw a line
+* 'quads' : To create quadrilaterals
+*/
 
 // Defaults
 context.strokeStyle = "#000000";
@@ -45,6 +50,16 @@ function clearCanvas() {
   }
 }
 
+/**
+*	This function is different from clearCanvas() as it is only called after a
+* certain amount of time has passed.
+*
+* timer set to a minute and 30 seconds
+*/
+function timeoutClearCanvas() {
+		//use modal?
+}
+
 //Currently only doing for touch as we dont have to do it for mouse
 var originX;
 var originY;
@@ -53,7 +68,7 @@ var currentY;
 function draw( e ) {
 
 	//For a line, we want to check whether the line is the start of the function
-	if(currentFunction === 'line' && e.type === 'touchstart'){
+	if((currentFunction === 'line' || currentFunction === 'quads') && e.type === 'touchstart'){
 		//We want to keep the current origin
 		originX = e.touches[0].pageX - canvas.offsetLeft;
 		originY = e.touches[0].pageY - canvas.offsetTop;
@@ -69,7 +84,7 @@ function draw( e ) {
 	}
 
 	//Whenever we move it, we want to draw a line
-	if( e.type === 'touchmove' ){
+	if( e.type === 'touchmove' && currentFunction == 'line'){
 		//First calculate if they went left or right
 		var angle = 0;
 		if (currentX > originX){	//if current is right of origin
@@ -97,6 +112,10 @@ function draw( e ) {
 			renderStraightLine('vertical', originX, originY, currentX, currentY);
 		}
 	}
+
+	if (e.type === 'touchmove' && currentFunction === 'quads'){
+		renderQuads();
+	}
   // if ( e.which === 1 || e.type === 'touchstart' || e.type === 'touchmove' ) {
   //   window.addEventListener( 'mousemove', draw );
 	// 	 window.addEventListener( 'touchmove', draw );
@@ -122,8 +141,8 @@ function draw( e ) {
 *
 * @param type: string either 'horizontal' or 'vertical'
 */
-function renderStraightLine(type, originX, originY, currentX, currentY){
-	context.beginPath()
+function renderStraightLine(type){
+	context.beginPath();
 	context.lineJoin = "round";
 	context.lineCap = "round";
 	context.strokeStyle = "black";
@@ -138,6 +157,23 @@ function renderStraightLine(type, originX, originY, currentX, currentY){
 	if (canvasState.length > 0) updateCanvas();
 	context.stroke();
 }
+
+/**
+*	This function will render quadrilaterals
+*/
+function renderQuads(){
+	context.beginPath();
+
+	var r_width = currentX - originX;
+	var r_height = currentY - originY;
+
+	context.clearRect( 0, 0, canvas.width, canvas.height);
+	context.rect(originX, originY, r_width, r_height);
+	context.fillStyle = toolColor;
+	if (canvasState.length > 0) updateCanvas();
+	context.fill();
+}
+
 
 function highlightButton( button ) {
   var buttons = button.parentNode.querySelectorAll( 'img' );
@@ -193,10 +229,14 @@ function stop( e ) {
     window.removeEventListener( 'mousemove', draw );
  		window.removeEventListener( 'touchmove', draw );
 
-		if (currentFunction === 'line'){
+		//If it is a line, we want to be saving the state only after they have finished making the line
+		if (currentFunction === 'line' || currentFunction === 'quads'){
 			saveState();
 		}
   }
+
+	//For creating a timer
+
 }
 
 function undoState() {
