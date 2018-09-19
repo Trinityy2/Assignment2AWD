@@ -9,11 +9,12 @@ var canvasState = [];
 var undoButton = document.querySelector( '[data-action=undo]' );
 
 //Use this to determine what is being done (by default, it is line).
-var currentFunction = 'quads';
+var currentFunction = 'brush';
 /**
 * The functions available (as strings):
 * 'line' : To draw a line
 * 'quads' : To create quadrilaterals
+* 'brush' : To create brush strokes
 */
 
 // Defaults
@@ -116,24 +117,12 @@ function draw( e ) {
 	if (e.type === 'touchmove' && currentFunction === 'quads'){
 		renderQuads();
 	}
-  // if ( e.which === 1 || e.type === 'touchstart' || e.type === 'touchmove' ) {
-  //   window.addEventListener( 'mousemove', draw );
-	// 	 window.addEventListener( 'touchmove', draw );
-  //   var mouseX = e.pageX - canvas.offsetLeft;
-  //   var mouseY = e.pageY - canvas.offsetTop;
-  //   var mouseDrag = e.type === 'mousemove';
-	//
-	// if( e.type === 'touchstart' || e.type === 'touchmove') {
-	// 	console.log(e);
-	// 	mouseX = e.touches[0].pageX - canvas.offsetLeft;
-	// 	mouseY = e.touches[0].pageY - canvas.offsetTop;
-	// 	mouseDrag = e.type === 'touchmove';
-	// }
-	//
-  // if ( e.type === 'mousedown' || e.type === 'touchstart') saveState();
-  //   linePoints.push( { x: mouseX, y: mouseY, drag: mouseDrag, width: toolSize, color: toolColor } );
-  //   updateCanvas();
-  //}
+
+	if(currentFunction === 'brush'){
+		var mouseDrag = e.type === 'touchmove';
+		linePoints.push({x:currentX, y: currentY, drag: mouseDrag, width: toolSize + 20, color: toolColor } );
+		renderLine();
+	}
 }
 
 /**
@@ -182,9 +171,10 @@ function highlightButton( button ) {
 }
 
 function renderLine() {
+	context.clearRect( 0, 0, canvas.width, canvas.height);
+	if (canvasState.length > 0) updateCanvas();
   for ( var i = 0, length = linePoints.length; i < length; i++ ) {
     if ( !linePoints[i].drag ) {
-      //context.stroke();
       context.beginPath();
       context.lineWidth = linePoints[i].width;
 	  	context.lineJoin = "round";
@@ -197,11 +187,11 @@ function renderLine() {
     }
   }
 
-  if ( toolMode === 'erase' ) {
-    context.globalCompositeOperation = 'destination-out';
-  } else {
-    context.globalCompositeOperation = 'source-over';
-  }
+  // if ( toolMode === 'erase' ) {
+  //   context.globalCompositeOperation = 'destination-out';
+  // } else {
+  //   context.globalCompositeOperation = 'source-over';
+  // }
 
   context.stroke();
 }
@@ -230,12 +220,10 @@ function stop( e ) {
  		window.removeEventListener( 'touchmove', draw );
 
 		//If it is a line, we want to be saving the state only after they have finished making the line
-		if (currentFunction === 'line' || currentFunction === 'quads'){
+		if (currentFunction === 'line' || currentFunction === 'quads' || currentFunction === 'brush'){
 			saveState();
 		}
   }
-
-	//For creating a timer
 
 }
 
