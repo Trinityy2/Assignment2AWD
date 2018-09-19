@@ -1,7 +1,7 @@
 body {
-    /* background-image: url(images/background.jpg);
-    background-size:cover; */
-    background-color: purple;
+    background-image: url(images/background.jpg);
+	background-repeat: no-repeat;
+	background-size:contain;
     height: auto;
     width: auto;
     display: flex;
@@ -14,13 +14,13 @@ body {
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-columns: 20% auto 20%;
-  grid-template-rows: 20% auto 20%;
+  grid-template-columns: 20% auto 24.5%;
+  grid-template-rows: 17% auto 25%;
   margin: auto;
 }
 
 #canvas {
-  background-color: white;
+  background-color: #FFFCF5;
   height: 100%;
   width: 100%;
   grid-row-start: 2;
