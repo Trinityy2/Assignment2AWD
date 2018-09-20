@@ -34,6 +34,7 @@ document.querySelector( '#tools' ).addEventListener( 'click', selectTool );
 // document.querySelector( '#colors' ).addEventListener( 'click', selectTool );
 window.addEventListener( 'resize', resizeCanvas );
 
+
 //Functions
 resizeCanvas();
 
@@ -209,12 +210,13 @@ function saveState() {
 }
 
 function selectTool( e ) {
-  if ( e.target === e.currentTarget ) return;
+	console.log( e );
+	if ( e.target === e.currentTarget ) return;
   if ( !e.target.dataset.action ) highlightButton( e.target );
   toolSize = e.target.dataset.size || toolSize;
   toolMode = e.target.dataset.mode || toolMode;
   toolColor = e.target.dataset.color || toolColor;
-  canvas.style.cursor = 'url( images/size'+toolSize+'.cur ), crosshair';
+  //canvas.style.cursor = 'url( images/size'+toolSize+'.cur ), crosshair';
   if ( e.target === undoButton ) undoState();
   if ( e.target.dataset.action == 'delete' ) clearCanvas();
 }

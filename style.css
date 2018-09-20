@@ -55,12 +55,23 @@ body {
   align-items: center;
 }
 
+#brushes{
+  grid-area: 2/3;
+  padding:10px;
+  width:100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-end;
+  z-index:1;
+}
+
 .tools img.disabled {
   opacity: 0.5;
   pointer-events: none;
  }
  
- .toolbar img:hover {
+ .tools img:hover {
   transform: scale(1.1);
  }
  
