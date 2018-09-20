@@ -15,7 +15,7 @@ body {
   height: 100%;
   display: grid;
   grid-template-columns: 20% auto 24.5%;
-  grid-template-rows: 17% auto 25%;
+  grid-template-rows: 16% auto 25%;
   margin: auto;
 }
 
@@ -29,3 +29,38 @@ body {
   grid-column-end: 2;
   z-index: 10;
 }
+
+#drawer{
+  position:fixed;
+  right:0;
+  top:10vh;
+  grid-row-start: 3;
+  grid-row-end: 2;
+  grid-column-start: 3;
+  grid-column-end: 3;
+  transform: translateX(20vw);
+  transition:0.5s;
+}
+
+.drawer-open #drawer{
+	transform:translateX(0vw);
+}
+
+#tools{
+  grid-area:3/2;
+  padding:10vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.tools img.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+ }
+ 
+ .toolbar img:hover {
+  transform: scale(1.1);
+ }
+ 

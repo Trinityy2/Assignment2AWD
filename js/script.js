@@ -30,7 +30,7 @@ canvas.addEventListener( 'mousedown', draw );
 canvas.addEventListener( 'touchstart', draw );
 window.addEventListener( 'mouseup', stop );
 window.addEventListener( 'touchend', stop );
-// document.querySelector( '#tools' ).addEventListener( 'click', selectTool );
+document.querySelector( '#tools' ).addEventListener( 'click', selectTool );
 // document.querySelector( '#colors' ).addEventListener( 'click', selectTool );
 window.addEventListener( 'resize', resizeCanvas );
 
@@ -49,7 +49,7 @@ function resizeCanvas() {
 */
 function clearCanvas() {
   var result = confirm( 'Shall I clear this drawing?' );
-  if ( result ) {
+  if ( result ) {	
     context.clearRect( 0, 0, canvas.width, canvas.height );
     canvasState.length = 0;
     undoButton.classList.add( 'disabled' );
@@ -205,7 +205,7 @@ function saveState() {
   canvasState.unshift( context.getImageData( 0, 0, canvas.width, canvas.height ) );
   linePoints = [];
   if ( canvasState.length > 25 ) canvasState.length = 25;
-  //undoButton.classList.remove( 'disabled' );
+  undoButton.classList.remove( 'disabled' );
 }
 
 function selectTool( e ) {
@@ -230,7 +230,7 @@ function stop( e ) {
 		}
   }
 
-	timer = setTimeout(timeoutClearCanvas, 90000);
+	//timer = setTimeout(timeoutClearCanvas, 90000);
 }
 
 function undoState() {
