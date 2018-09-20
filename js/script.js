@@ -7,6 +7,7 @@ var toolSize = 5;
 var toolColor = '#000000'
 var canvasState = [];
 var undoButton = document.querySelector( '[data-action=undo]' );
+var timer;
 
 //Use this to determine what is being done (by default, it is line).
 var currentFunction = 'brush';
@@ -42,8 +43,12 @@ function resizeCanvas() {
 	if(canvasState.length) updateCanvas();
 }
 
+/*
+* This function will be called when the clear button is pressed. This is just to
+* clear the board.
+*/
 function clearCanvas() {
-  var result = confirm( 'Are you sure you want to delete the picture?' );
+  var result = confirm( 'Shall I clear this drawing?' );
   if ( result ) {
     context.clearRect( 0, 0, canvas.width, canvas.height );
     canvasState.length = 0;
@@ -58,7 +63,12 @@ function clearCanvas() {
 * timer set to a minute and 30 seconds
 */
 function timeoutClearCanvas() {
-		//use modal?
+		var result = confirm('Is anyone there? Should I clear this drawing?');
+		if(result){
+			context.clearRect(0,0,canvas.width, canvas.height);
+			canvasState.length = 0;
+			undoButton.classList.add('disabled');
+		}
 }
 
 //Currently only doing for touch as we dont have to do it for mouse
@@ -68,6 +78,7 @@ var currentX;
 var currentY;
 function draw( e ) {
 
+	clearTimeout(timer);
 	//For a line, we want to check whether the line is the start of the function
 	if((currentFunction === 'line' || currentFunction === 'quads') && e.type === 'touchstart'){
 		//We want to keep the current origin
@@ -187,12 +198,6 @@ function renderLine() {
     }
   }
 
-  // if ( toolMode === 'erase' ) {
-  //   context.globalCompositeOperation = 'destination-out';
-  // } else {
-  //   context.globalCompositeOperation = 'source-over';
-  // }
-
   context.stroke();
 }
 
@@ -225,6 +230,7 @@ function stop( e ) {
 		}
   }
 
+	timer = setTimeout(timeoutClearCanvas, 90000);
 }
 
 function undoState() {
@@ -235,5 +241,4 @@ function undoState() {
 function updateCanvas() {
   context.clearRect( 0, 0, canvas.width, canvas.height );
   context.putImageData( canvasState[ 0 ], 0, 0 );
-  //renderLine();
 }
