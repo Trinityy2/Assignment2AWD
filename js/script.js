@@ -21,7 +21,6 @@ var currentFunction = 'line';
 
 // Defaults
 context.strokeStyle = "#000000";
-context.lineWidth = 5;
 context.lineJoin = "round";
 context.lineCap = "round";
 
@@ -37,11 +36,11 @@ window.addEventListener( 'resize', resizeCanvas );
 
 //Slider to increase brush size
 var slider = document.getElementById("brushSize");
+context.lineWidth = slider.value;
 
 // Update the current slider value (each time you drag the slider handle)
 slider.oninput = function() {
     toolSize = this.value;
-		console.log(toolSize);
 }
 
 
