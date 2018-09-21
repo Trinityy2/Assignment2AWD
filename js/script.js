@@ -241,11 +241,8 @@ function stop( e ) {
 }
 
 function undoState() {
-	console.log(canvasState.length);
-	if(canvasState.length > 0 ){
-			context.putImageData( canvasState.shift(), 0, 0 );
-			console.log("un-done");
-	}
+	context.putImageData( canvasState.shift(), 0, 0 );
+
   if ( !canvasState.length ) undoButton.classList.add( 'disabled' );
 }
 
