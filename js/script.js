@@ -35,6 +35,15 @@ document.querySelector( '#drawer' ).addEventListener( 'click', selectTool );
 document.querySelector( '#quads' ).addEventListener( 'click', selectTool );
 window.addEventListener( 'resize', resizeCanvas );
 
+//Slider to increase brush size
+var slider = document.getElementById("brushSize");
+
+// Update the current slider value (each time you drag the slider handle)
+slider.oninput = function() {
+    toolSize = this.value;
+		console.log(toolSize);
+}
+
 
 //Functions
 resizeCanvas();
@@ -151,6 +160,7 @@ function renderStraightLine(type){
 	context.lineJoin = "round";
 	context.lineCap = "round";
 	context.strokeStyle = "black";
+	context.lineWidth = toolSize;
 	context.moveTo (originX, originY);
 	if (type === 'horizontal'){
 		context.lineTo(currentX, originY);
@@ -192,7 +202,7 @@ function renderLine() {
   for ( var i = 0, length = linePoints.length; i < length; i++ ) {
     if ( !linePoints[i].drag ) {
       context.beginPath();
-      context.lineWidth = linePoints[i].width;
+      context.lineWidth = toolSize;
 	  	context.lineJoin = "round";
 			context.lineCap = "round";
       context.strokeStyle = linePoints[i].color;
