@@ -9,27 +9,27 @@ var canvasState = [];
 var undoButton = document.querySelector( '[data-action=undo]' );
 var timer;
 
-//Use this to determine what is being done (by default, it is line).
-var currentFunction = 'brush';
 /**
+* Use this to determine what is being done (by default, it is line).
+*
 * The functions available (as strings):
 * 'line' : To draw a line
 * 'quads' : To create quadrilaterals
 * 'brush' : To create brush strokes
 */
+var currentFunction = 'line';
 
 // Defaults
 context.strokeStyle = "#000000";
 context.lineWidth = 5;
-// canvas.style.cursor = 'url( images/size'+toolSize+'.cur ), crosshair';
 context.lineJoin = "round";
 context.lineCap = "round";
 
 // Event listeners
 canvas.addEventListener( 'mousedown', draw );
 canvas.addEventListener( 'touchstart', draw );
-window.addEventListener( 'mouseup', stop );
-window.addEventListener( 'touchend', stop );
+canvas.addEventListener( 'mouseup', stop );
+canvas.addEventListener( 'touchend', stop );
 document.querySelector( '#tools' ).addEventListener( 'click', selectTool );
 // document.querySelector( '#colors' ).addEventListener( 'click', selectTool );
 window.addEventListener( 'resize', resizeCanvas );
@@ -50,7 +50,7 @@ function resizeCanvas() {
 */
 function clearCanvas() {
   var result = confirm( 'Shall I clear this drawing?' );
-  if ( result ) {	
+  if ( result ) {
     context.clearRect( 0, 0, canvas.width, canvas.height );
     canvasState.length = 0;
     undoButton.classList.add( 'disabled' );
@@ -64,12 +64,15 @@ function clearCanvas() {
 * timer set to a minute and 30 seconds
 */
 function timeoutClearCanvas() {
+		clearTimeout(timer);
 		var result = confirm('Is anyone there? Should I clear this drawing?');
 		if(result){
 			context.clearRect(0,0,canvas.width, canvas.height);
 			canvasState.length = 0;
 			undoButton.classList.add('disabled');
 		}
+
+		timer = setTimeout(timeoutClearCanvas, 90000);
 }
 
 //Currently only doing for touch as we dont have to do it for mouse
@@ -232,11 +235,15 @@ function stop( e ) {
 		}
   }
 
-	//timer = setTimeout(timeoutClearCanvas, 90000);
+	timer = setTimeout(timeoutClearCanvas, 90000);
 }
 
 function undoState() {
-  context.putImageData( canvasState.shift(), 0, 0 );
+	console.log(canvasState.length);
+	if(canvasState.length > 0 ){
+			context.putImageData( canvasState.shift(), 0, 0 );
+			console.log("un-done");
+	}
   if ( !canvasState.length ) undoButton.classList.add( 'disabled' );
 }
 
