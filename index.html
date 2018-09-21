@@ -1,4 +1,4 @@
-<html>
+<html class="drawer-open" >
 
   <head>
     <meta charset="UTF-8">
@@ -6,23 +6,29 @@
     <link rel="stylesheet" href="style.css" />
   </head>
 
-  <body class  = "drawer-open">
+  <body>
     <div id="app">
       <canvas id="canvas" height="500px" width="920px" ></canvas>
       <div id="drawer">
-        <img src="images/image.png" height="625px" width="307px">
-      </div>
+            <img src="images/straightline.svg"/ height="50px" width="200px">
+            <img src="images/Redbrush.svg"/ height="50px" width="200px">
+            <img src="images/Bluebrush.svg"/ height="50px" width="200px">
+            <img src="images/yellowbrush.svg"/ height="50px" width="200px">
+           </div>
       <div id="tools" class ="tools">
         <img src="images/undo-arrow.svg" height="60px" width="60px" data-action="undo" class="disabled" />
-        <img src="images/clearsymbol.png" height="60px" width="60px" data-action="delete" />
+        <img src="images/delete.svg" height="60px" width="60px" data-action="delete" />
       </div>
-      <div id="brushes" class = "art">
-       <img src="images/straightline.svg"/ height="50px" width="200px">
-       <img src="images/Redbrush.svg"/ height="50px" width="200px">
-       <img src="images/Bluebrush.svg"/ height="50px" width="200px">
-       <img src="images/yellowbrush.svg"/ height="50px" width="200px">
-      </div>
+      <div id="draweropener" class="tools">
+        <img src="images/open drawer.jpg" height="60px" width="60px"/>
     </div>
+	
+	<script>
+ document.querySelector	( '#draweropener' ).addEventListener( 'touchend', openDrawer );
+ function openDrawer(){	
+  document.querySelector( 'html' ).classList.toggle( 'drawer-open' );
+  }
+</script>
 
     <!-- <div id = "afk" class = "modal">
       <div class = "modal-content">
