@@ -1,4 +1,4 @@
-<html class="drawer-open" >
+<html>
 
   <head>
     <meta charset="UTF-8">
@@ -9,18 +9,22 @@
   <body>
     <div id="app">
       <canvas id="canvas" height="500px" width="920px" ></canvas>
-      <div id="drawer">
-            <img src="images/straightline.svg"/ height="50px" width="200px">
-            <img src="images/Redbrush.svg"/ height="50px" width="200px">
-            <img src="images/Bluebrush.svg"/ height="50px" width="200px">
-            <img src="images/yellowbrush.svg"/ height="50px" width="200px">
+      <div id="drawer" class="brushes">
+            <img src="images/straightline.svg" height="60px" width="300px" data-function="line" data-size="1" class="active"/>
+            <img src="images/Redbrush.svg" height="60px" width="300px" data-function="brush" data-color="red"/>
+            <img src="images/Bluebrush.svg" height="60px" width="300px" data-function="brush" data-color="blue" />
+            <img src="images/yellowbrush.svg" height="60px" width="300px" data-function="brush" data-color="yellow" />
            </div>
       <div id="tools" class ="tools">
         <img src="images/undo-arrow.svg" height="60px" width="60px" data-action="undo" class="disabled" />
         <img src="images/delete.svg" height="60px" width="60px" data-action="delete" />
       </div>
+      <div id ="quads" class="tools">
+          <img src="images/quads.JPG" height="100px" width="100px" data-function="quads"/>
+      </div>
       <div id="draweropener" class="tools">
         <img src="images/open drawer.jpg" height="60px" width="60px"/>
+    </div>
     </div>
 	
 	<script>
@@ -28,6 +32,7 @@
  function openDrawer(){	
   document.querySelector( 'html' ).classList.toggle( 'drawer-open' );
   }
+  
 </script>
 
     <!-- <div id = "afk" class = "modal">
