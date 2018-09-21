@@ -31,7 +31,8 @@ canvas.addEventListener( 'touchstart', draw );
 canvas.addEventListener( 'mouseup', stop );
 canvas.addEventListener( 'touchend', stop );
 document.querySelector( '#tools' ).addEventListener( 'click', selectTool );
-// document.querySelector( '#colors' ).addEventListener( 'click', selectTool );
+document.querySelector( '#drawer' ).addEventListener( 'click', selectTool );
+document.querySelector( '#quads' ).addEventListener( 'click', selectTool );
 window.addEventListener( 'resize', resizeCanvas );
 
 
@@ -218,7 +219,8 @@ function selectTool( e ) {
   if ( !e.target.dataset.action ) highlightButton( e.target );
   toolSize = e.target.dataset.size || toolSize;
   toolMode = e.target.dataset.mode || toolMode;
-  toolColor = e.target.dataset.color || toolColor;
+	toolColor = e.target.dataset.color || toolColor;
+	currentFunction = e.target.dataset.function || currentFunction;
   //canvas.style.cursor = 'url( images/size'+toolSize+'.cur ), crosshair';
   if ( e.target === undoButton ) undoState();
   if ( e.target.dataset.action == 'delete' ) clearCanvas();
